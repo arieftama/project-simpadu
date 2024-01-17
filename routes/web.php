@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,18 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.auth.auth-login', ['type_menu' => '']);
-});
+Route::view('/', 'pages.auth.auth-login', ['type_menu' => '']);
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('home', function () {
         return view('pages.app.dashboard-simpadu', ['type_menu' => '']);
     })->name('home');
+
     Route::resource('user', UserController::class);
     Route::resource('schedule', ScheduleController::class);
+    Route::resource('form', FormController::class);
+    Route::get('form/showtable', function () {
+    })->name('form.showTable');
 });
+
 
 
 
